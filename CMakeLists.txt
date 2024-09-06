@@ -21,9 +21,6 @@ set(JLIB_RELEASE_FLAGS ${GENERAL_FLAGS} ${WARNING_FLAGS} ${PERFORMANCE_FLAGS})
 # basic packages
 find_package(fmt REQUIRED)
 
-# dummy interface library to add include path
-add_library(jlib_include INTERFACE)
-target_include_directories(jlib_include INTERFACE ${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 
 # dummy interface library (no sources) to hide flag selection
@@ -40,7 +37,7 @@ target_link_options(jlib_flags INTERFACE
 add_subdirectory(jlib)
 add_subdirectory(bench)
 
-# tests
+# unit tests
 find_package(GTest REQUIRED)
 enable_testing()
 include(GoogleTest)
