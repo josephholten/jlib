@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.23)
 project(jlib CXX)
 
-set(JLIB_DEFAULT_BUILD_TYPE Release)
-
 # build type
+set(JLIB_DEFAULT_BUILD_TYPE Release)
 if(NOT CMAKE_BUILD_TYPE)
     message("project euler: default CMAKE_BUILD_TYPE=${JLIB_DEFAULT_BUILD_TYPE}")
     set(CMAKE_BUILD_TYPE ${JLIB_DEFAULT_BUILD_TYPE} CACHE STRING "Choose the type of build.")
@@ -21,7 +20,16 @@ set(JLIB_RELEASE_FLAGS ${GENERAL_FLAGS} ${WARNING_FLAGS} ${PERFORMANCE_FLAGS})
 # basic packages
 find_package(fmt REQUIRED)
 
+# include directory
 include_directories(${PROJECT_SOURCE_DIR})
+
+# destination directories
+set(INCLUDE_DEST "include/jlib")
+set(LIBRARY_DEST "lib/jlib")
+
+# dummy interface library for include directories
+add_library(jlib_include INTERFACE)
+target_include_directories(jlib_include INTERFACE ${PROJECT_SOURCE_DIR})
 
 # dummy interface library (no sources) to hide flag selection
 add_library(jlib_flags INTERFACE)
