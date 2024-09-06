@@ -4,4 +4,4 @@ project(test_package CXX)
 find_package(jlib CONFIG REQUIRED)
 
 add_executable(test_bigint test_bigint.cpp)
-target_link_libraries(test_bigint jlib::jlib)
+target_link_libraries(test_bigint jlib::jlib_include)
