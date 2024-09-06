@@ -22,8 +22,9 @@ class jlib(ConanFile):
         git = Git(self)
 
         diff = git.run("status --short")
-        print(diff)
-        exit(1)
+        if diff != "":
+            self.output.error("working tree is not clean")
+            exit(1)
 
         descr = git.run("describe --tags")
         regex = r"(\d+(?:.\d+)*(?:-pre)?)(?:-(\d+)-((?:\d|\w)+))?"
@@ -39,7 +40,7 @@ class jlib(ConanFile):
             if len(groups) == 3:
                 tag, commits, h = groups
                 version = f"{tag}.{commits}+{h}"
-                print("version = ", version)
+                self.output.highlight(f"version = {version}")
                 self.version = version
 
     def layout(self):
