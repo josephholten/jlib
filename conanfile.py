@@ -5,11 +5,12 @@ from conan.tools.scm import Git
 
 class jlib(ConanFile):
     name = "jlib"
-    version = "!!TODO"
 
     # Optional metadata
     author = "Joseph Holten joseph@holten.com"
-    description = "My Lib"
+    description = "A collection of useful C++ software"
+
+    requires = "fmt/[>=11]"
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
@@ -18,6 +19,9 @@ class jlib(ConanFile):
 
     def set_version(self):
         git = Git(self)
+        tag = git.run("describe --tags")
+        commit = git.run("rev-parse --short HEAD")
+        self.version = f"{tag}+{commit}"
 
     def layout(self):
         cmake_layout(self)
