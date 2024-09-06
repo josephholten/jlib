@@ -2,7 +2,9 @@ from conan import ConanFile
 from conan.tools.cmake import CMake, cmake_layout
 from conan.tools.build import can_run
 
+import tempfile
 import os
+from pathlib import Path
 
 class TestPackage(ConanFile):
     name = "jlib_test_package"
@@ -23,5 +25,24 @@ class TestPackage(ConanFile):
 
     def test(self):
         if can_run(self):
-            cmd = os.path.join(self.cpp.build.bindir, "test_bigint")
-            self.run(cmd, env="conanrun")
+            tests = list(Path(self.source_folder).glob("test_*.cpp"))
+            self.output.info(f"Running tests: {tests}")
+
+            for test in tests:
+                with open(str(test) + ".out", "r") as file:
+                    expected_output = file.read()
+
+                # Creating a temporary file to capture the output
+                with tempfile.NamedTemporaryFile() as tmp:
+                    cmd = os.path.join(self.cpp.build.bindir, "test_bigint")
+                    # redirect to output file
+                    self.run(cmd, env="conanrun", stdout=tmp)
+
+                    # Rewinding the file and reading the output
+                    tmp.seek(0)
+                    output = tmp.read().decode()
+
+                    if output != expected_output:
+                        self.output.error(f"Test {test} failed: output did not match expected")
+                        self.output.error(f"    Expected {expected_output}")
+                        self.output.error(f"    Actual   {output}")
