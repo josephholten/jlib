@@ -34,8 +34,7 @@ target_include_directories(jlib_include INTERFACE
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${INCLUDE_DEST}>
 )
-install(TARGETS jlib_include EXPORT jlib_include DESTINATION "${LIBRARY_DEST}")
-install(EXPORT jlib_include DESTINATION "${LIBRARY_DEST}")
+install(TARGETS jlib_include EXPORT jlib_targets DESTINATION "${LIBRARY_DEST}")
 
 # dummy interface library (no sources) to hide flag selection
 add_library(jlib_flags INTERFACE)
@@ -46,12 +45,19 @@ target_compile_options(jlib_flags INTERFACE
 target_link_options(jlib_flags INTERFACE
     $<$<CONFIG:Debug>:${SANITIZE}>
 )
-install(TARGETS jlib_flags EXPORT jlib_flags DESTINATION "${LIBRARY_DEST}")
-install(EXPORT jlib_flags DESTINATION "${LIBRARY_DEST}")
+install(TARGETS jlib_flags EXPORT jlib_targets DESTINATION "${LIBRARY_DEST}")
 
 # submodules
 add_subdirectory(jlib)
 add_subdirectory(bench)
+
+# exports
+install(
+    EXPORT jlib_targets
+    FILE jlib_targets.cmake
+    NAMESPACE jlib::
+    DESTINATION "${LIBRARY_DEST}"
+)
 
 # unit tests
 find_package(GTest REQUIRED)
