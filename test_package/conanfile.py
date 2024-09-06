@@ -30,7 +30,7 @@ class TestPackage(ConanFile):
 
             for test in tests:
                 with open(str(test) + ".out", "r") as file:
-                    expected_output = file.read()
+                    expected_output = file.read().strip()
 
                 # Creating a temporary file to capture the output
                 with tempfile.NamedTemporaryFile() as tmp:
@@ -40,11 +40,11 @@ class TestPackage(ConanFile):
 
                     # Rewinding the file and reading the output
                     tmp.seek(0)
-                    output = tmp.read().decode()
+                    output = tmp.read().decode().strip()
 
                     if output == expected_output:
                         self.output.success("TEST PASSED")
                     else:
                         self.output.warning(f"TEST {test} FAILED: output did not match expected")
-                        self.output.warning(f"    Expected {expected_output}")
-                        self.output.warning(f"    Actual   {output}")
+                        self.output.warning(f"    Expected '{expected_output}'")
+                        self.output.warning(f"    Actual   '{output}'")
