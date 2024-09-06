@@ -53,7 +53,7 @@ add_subdirectory(bench)
 # exports
 install(
     EXPORT jlib_targets
-    FILE jlib_targets.cmake
+    FILE jlibTargets.cmake
     NAMESPACE jlib::
     DESTINATION "${LIBRARY_DEST}/cmake/jlib"
 )

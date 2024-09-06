@@ -1,1 +1,1 @@
-include(${LIBRARY_DEST}/cmake/jlib/jlib_targets.cmake)
+include(${LIBRARY_DEST}/cmake/jlib/jlibTargets.cmake)
