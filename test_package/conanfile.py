@@ -42,7 +42,9 @@ class TestPackage(ConanFile):
                     tmp.seek(0)
                     output = tmp.read().decode()
 
-                    if output != expected_output:
-                        self.output.error(f"Test {test} failed: output did not match expected")
-                        self.output.error(f"    Expected {expected_output}")
-                        self.output.error(f"    Actual   {output}")
+                    if output == expected_output:
+                        self.output.success("TEST PASSED")
+                    else:
+                        self.output.warning(f"TEST {test} FAILED: output did not match expected")
+                        self.output.warning(f"    Expected {expected_output}")
+                        self.output.warning(f"    Actual   {output}")
