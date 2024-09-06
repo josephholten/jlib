@@ -27,9 +27,12 @@ include_directories(${PROJECT_SOURCE_DIR})
 set(INCLUDE_DEST "include/jlib")
 set(LIBRARY_DEST "lib/jlib")
 
-# dummy interface library for include directories
+# dummy interface library to hide include directories
 add_library(jlib_include INTERFACE)
-target_include_directories(jlib_include INTERFACE ${PROJECT_SOURCE_DIR})
+target_include_directories(jlib_include INTERFACE
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${INCLUDE_DEST}>
+)
 
 # dummy interface library (no sources) to hide flag selection
 add_library(jlib_flags INTERFACE)
