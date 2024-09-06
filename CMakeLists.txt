@@ -54,10 +54,10 @@ add_subdirectory(bench)
 install(
     EXPORT jlib_targets
     FILE jlibTargets.cmake
-    NAMESPACE jlib::
-    DESTINATION "${LIBRARY_DEST}/cmake/jlib"
+    #NAMESPACE jlib::
+    DESTINATION "${LIBRARY_DEST}"
 )
-install(FILES jlib-config.cmake DESTINATION "${LIBRARY_DEST}/cmake/jlib")
+install(FILES jlib-config.cmake DESTINATION "${LIBRARY_DEST}")
 
 # unit tests
 find_package(GTest REQUIRED)
