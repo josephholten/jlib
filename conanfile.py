@@ -64,4 +64,8 @@ class jlib(ConanFile):
 
     def package_info(self):
         self.cpp_info.components["jassert"].libs = ["jassert"]
+        self.cpp_info.components["jassert"].includedirs = ["include"]
+        self.cpp_info.components["jassert"].libdirs = ["lib/jlib"]
         self.cpp_info.components["bigint"].libs = ["bigint"]
+        self.cpp_info.components["bigint"].includedirs = ["include"]
+        self.cpp_info.components["bigint"].libdirs = ["lib/jlib"]
