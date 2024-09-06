@@ -63,5 +63,7 @@ class jlib(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.components["jassert"].libs = ["jlib::jassert"]
-        self.cpp_info.components["bigint"].libs = ["jlib::bigint"]
+        self.cpp_info.components["jassert"].libs = ["jassert"]
+        self.cpp_info.components["jassert"].set_property("cmake_target_name", "jlib::jassert")
+        self.cpp_info.components["bigint"].libs = ["bigint"]
+        self.cpp_info.components["bigint"].set_property("cmake_target_name", "jlib::bigint")
