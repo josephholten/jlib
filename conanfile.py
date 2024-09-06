@@ -20,6 +20,11 @@ class jlib(ConanFile):
 
     def set_version(self):
         git = Git(self)
+
+        diff = git.run("status --short")
+        print(diff)
+        exit(1)
+
         descr = git.run("describe --tags")
         regex = r"(\d+(?:.\d+)*(?:-pre)?)(?:-(\d+)-((?:\d|\w)+))?"
         match = re.match(regex, descr)

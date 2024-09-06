@@ -10,5 +10,3 @@ add_library(bigint BigInt.hpp BigInt.cpp)
 target_link_libraries(bigint PRIVATE jlib_flags PUBLIC jlib_include fmt::fmt)
 install(TARGETS bigint EXPORT jlib DESTINATION "${LIBRARY_DEST}")
 install(FILES BigInt.hpp DESTINATION "${INCLUDE_DEST}")
-
-install(EXPORT jlib DESTINATION "${LIBRARY_DEST}")
