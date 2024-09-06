@@ -2,6 +2,7 @@ from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 from conan.tools.scm import Git
 
+import re
 
 class jlib(ConanFile):
     name = "jlib"
@@ -19,9 +20,22 @@ class jlib(ConanFile):
 
     def set_version(self):
         git = Git(self)
-        tag = git.run("describe --tags")
-        commit = git.run("rev-parse --short HEAD")
-        self.version = f"{tag}+{commit}"
+        descr = git.run("describe --tags")
+        regex = r"(\d+(?:.\d+)*(?:-pre)?)(?:-(\d+)-((?:\d|\w)+))?"
+        match = re.match(regex, descr)
+        if match is None:
+            raise Exception("tag doesn't match")
+        else:
+            groups = match.groups()
+            if len(groups) == 1:
+                self.version = descr
+            if len(groups) == 2:
+                raise Exception("tag shouldn't contain exactly 2 groups")
+            if len(groups) == 3:
+                tag, commits, h = groups
+                version = f"{tag}.{commits}+{h}"
+                print("version = ", version)
+                self.version = version
 
     def layout(self):
         cmake_layout(self)
@@ -41,3 +55,6 @@ class jlib(ConanFile):
     def package(self):
         cmake = CMake(self)
         cmake.install()
+
+    #def package_info(self):
+    #    self.cpp_info.libs = ["jlib::bigint", "jlib::jassert"]
