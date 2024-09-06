@@ -1,8 +1,9 @@
-#ifndef ASSERT_HPP
-#include "fmt/core.h"
+#ifndef JLIB_ASSERT_HPP
+
+#include <fmt/core.h>
 #include <cstdlib>
 #include <string>
-#include "cpptrace/cpptrace.hpp"
+#include <cpptrace/cpptrace.hpp>
 #include <stacktrace>
 
 #ifndef NDEBUG
@@ -18,7 +19,7 @@ if (!jassert_c) { \
     jassert_raw_trace.resolve().print(); \
     fmt::println("assertion failed: expected the condition to be true");\
     fmt::println("    {}", #condition);\
-    exit(1); \
+    jassert_exit(1); \
 } \
 }
 
@@ -30,7 +31,7 @@ if (jassert_eq_A != j_assert_eq_B) {\
     fmt::println("assertion failed: expected equality of"); \
     fmt::println("    (LHS) {} = {}", #A, jassert_eq_A); \
     fmt::println("    (RHS) {} = {}", #B, jassert_eq_B); \
-    exit(1); \
+    jassert_exit(1); \
 } \
 }
 
@@ -42,8 +43,12 @@ if (jassert_eq_A >= j_assert_eq_B) {\
     fmt::println("assertion failed: expected equality of"); \
     fmt::println("    (LHS) {} = {}", #A, jassert_eq_A); \
     fmt::println("    (RHS) {} = {}", #B, jassert_eq_B); \
-    exit(1); \
+    jassert_exit(1); \
 } \
 }
 
-#endif
+namespace jlib {
+    void jassert_exit(int i);
+}
+
+#endif /* JLIB_ASSERT_HPP */

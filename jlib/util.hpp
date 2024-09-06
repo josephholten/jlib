@@ -196,5 +196,11 @@ void print_digits(const std::vector<T>& digits) {
     fmt::println("");
 }
 
+size_t hash_combine(size_t& seed, size_t val) {
+    std::hash<size_t> hasher;
+    seed ^= hasher(val) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+    return seed;
+}
+
 
 #endif

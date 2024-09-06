@@ -13,10 +13,6 @@ Then simply call
 to download and build missing dependencies.
 Use
 
-`conan --prefix conan-(debug|release)`
+`conan build . -s build_type=(Debug|Release)`
 
-to configure the build system and
-
-`conan --build --prefix conan-(debug|release)`
-
-to build the library and tests.
+to build the library.

@@ -10,7 +10,7 @@ class jlib(ConanFile):
     author = "Joseph Holten joseph@holten.com"
     description = "A collection of useful C++ software"
 
-    requires = "fmt/[>=11]"
+    requires = "fmt/[>=11]", "benchmark/[>=1.9]", "gtest/[>=1.15]", "cpptrace/[>=0.7.0]"
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
