@@ -16,3 +16,15 @@ Use
 `conan build . -s build_type=(Debug|Release)`
 
 to build the library.
+
+## TODO
+
+- do CI/CD with conan compile, test and push to own repository?
+- use options to build only parts and remove dependencies
+- make test_jassert
+- use jassert in the other projects
+- flesh out slice & matrix
+- include it in project euler
+- rename to all lowercase
+- make git commit history nicer (remove unneded commits)
+- make good readme
