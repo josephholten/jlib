@@ -12,7 +12,7 @@ install(
 install(FILES jassert.hpp DESTINATION "${INCLUDE_DEST}")
 
 # bigint
-add_library(bigint BigInt.hpp BigInt.cpp)
+add_library(bigint bigint.hpp bigint.cpp)
 target_link_libraries(bigint PRIVATE jlib_flags PUBLIC jlib_include fmt::fmt)
 install(
     TARGETS bigint

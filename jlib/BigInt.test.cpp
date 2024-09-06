@@ -1,6 +1,6 @@
 #include <string>
 #include <sstream>
-#include "BigInt.hpp"
+#include <jlib/bigint.hpp>
 #include <gtest/gtest.h>
 #include <random>
 

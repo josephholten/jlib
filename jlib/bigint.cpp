@@ -1,4 +1,4 @@
-#include <jlib/BigInt.hpp>
+#include <jlib/bigint.hpp>
 #include <fmt/core.h>
 #include <string_view>
 #include <jlib/util.hpp>
