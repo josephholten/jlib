@@ -4,6 +4,7 @@ from conan.tools.scm import Git
 from conan.tools.build import can_run
 
 import re
+import os
 
 class TestPackage(ConanFile):
     name = "jlib_test_package"
@@ -33,8 +34,6 @@ class TestPackage(ConanFile):
                 version = f"{tag}.{commits}+{h}"
                 print("version = ", version)
                 self.version = version
-
-
 
     def layout(self):
         cmake_layout(self)
