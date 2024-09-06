@@ -26,6 +26,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 # destination directories
 set(INCLUDE_DEST "include/jlib")
 set(LIBRARY_DEST "lib/jlib")
+install(FILES jlib-config.cmake DESTINATION "${LIBRARY_DEST}")
 
 # dummy interface library to hide include directories
 add_library(jlib_include INTERFACE)

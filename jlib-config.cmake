@@ -1,0 +1,1 @@
+include(${LIBRARY_DEST}/jlib.cmake)
