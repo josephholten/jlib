@@ -1,7 +1,9 @@
 #include <jlib/BigInt.hpp>
 #include <fmt/core.h>
 #include <string_view>
-#include <util.hpp>
+#include <jlib/util.hpp>
+#include <sstream>
+#include <random>
 
 namespace jlib {
 
@@ -14,11 +16,6 @@ static u64 high(u128 x) {
 
 static u64 low(u128 x) {
     return (u64)x;
-}
-
-BigInt operator ""_BigInt(const char* in) {
-    std::stringstream ss(in);
-    return BigInt::parse(ss);
 }
 
 BigInt& BigInt::operator=(const BigInt& other) {
@@ -37,6 +34,17 @@ bool BigInt::operator==(const BigInt& other) const {
             return false;
     for (size_t i = m; i < other.m_data.size(); i++)
         if (other.m_data[i] != 0)
+            return false;
+    return true;
+}
+
+bool BigInt::operator==(size_t n) const {
+    if (m_data[0] != n)
+        return false;
+    if (m_data.size() == 1)
+        return true;
+    for (size_t i = 1; i < m_data.size(); i++)
+        if (m_data[i] != 0)
             return false;
     return true;
 }
@@ -290,17 +298,7 @@ size_t BigInt::hash() const {
 
 }
 
-template<>
-struct std::hash<jlib::BigInt> {
-    size_t operator()(const jlib::BigInt& I) const noexcept {
-        return I.hash();
-    }
-};
-
-template<>
-struct fmt::formatter<jlib::BigInt> : fmt::formatter<string_view> {
-    template<typename FormatContext>
-    auto format(jlib::BigInt& I, FormatContext& ctx) const {
-        return fmt::formatter<string_view>::format(I.to_string(), ctx);
-    }
-};
+jlib::BigInt operator""_BigInt(const char* in) {
+    std::stringstream ss(in);
+    return jlib::BigInt::parse(ss);
+}

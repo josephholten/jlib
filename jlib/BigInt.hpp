@@ -1,17 +1,11 @@
 #ifndef BIGINT_HPP
 #define BIGINT_HPP
 
-#include <fstream>
 #include <vector>
-#include <cstdint>
 #include <string>
-#include <cassert>
-#include <istream>
-#include <algorithm>
-#include <random>
-#include <sstream>
-
-#include "fmt/core.h"
+#include <cstdint>
+#include <fmt/core.h>
+#include <string_view>
 
 // TODO:
 //  - make arbitrary base and storage type! (compile time or runtime?)
@@ -63,6 +57,7 @@ public:
     // comparision
 
     bool operator==(const BigInt& other) const;
+    bool operator==(size_t n) const;
     bool operator!=(const BigInt& other) const;
     bool operator<(BigInt a) const;
     bool operator<=(BigInt a) const;
@@ -78,5 +73,23 @@ private:
 };
 
 }
+
+jlib::BigInt operator ""_BigInt(const char* in);
+
+template<>
+struct std::hash<jlib::BigInt> {
+    size_t operator()(const jlib::BigInt& I) const noexcept {
+        return I.hash();
+    }
+};
+
+template<>
+struct fmt::formatter<jlib::BigInt> : fmt::formatter<string_view> {
+    template<typename FormatContext>
+    auto format(jlib::BigInt& I, FormatContext& ctx) const {
+        return fmt::formatter<string_view>::format(I.to_string(), ctx);
+    }
+};
+
 
 #endif

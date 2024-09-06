@@ -7,7 +7,7 @@
 TEST(BigInt, basic) {
     for (size_t i = 0; i < 10; i++) {
         std::string s = std::to_string(i);
-        BigInt I = BigInt::parse(s);
+        jlib::BigInt I = jlib::BigInt::parse(s);
         EXPECT_EQ(s, I.to_string());
     }
 }
@@ -29,7 +29,7 @@ TEST(BigInt, parse_very_long) {
             for (size_t i = 1; i < l; i++)
                 ss.put('0' + digit(engine));
 
-            EXPECT_EQ(ss.str(), BigInt::parse(ss).to_string());
+            EXPECT_EQ(ss.str(), jlib::BigInt::parse(ss).to_string());
         }
     }
 }
@@ -44,14 +44,14 @@ TEST(BigInt, addition) {
     for (size_t k1 = 0; k1 < K; k1++) {
         size_t l = length(engine);
         for (size_t k2 = 0; k2 < K; k2++) {
-            BigInt zero;
-            BigInt random = BigInt::random(l);
+            jlib::BigInt zero;
+            jlib::BigInt random = jlib::BigInt::random(l);
             EXPECT_EQ(random+zero, random);
         }
     }
 }
 
 TEST(BigInt, literals) {
-    BigInt zero;
+    jlib::BigInt zero;
     EXPECT_EQ(zero, 0_BigInt);
 }

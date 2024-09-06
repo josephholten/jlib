@@ -1,5 +1,5 @@
-#include "benchmark/benchmark.h"
-#include "util.hpp"
+#include <benchmark/benchmark.h>
+#include <jlib/util.hpp>
 
 volatile size_t sum = 0;
 

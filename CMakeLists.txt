@@ -21,14 +21,18 @@ set(JLIB_RELEASE_FLAGS ${GENERAL_FLAGS} ${WARNING_FLAGS} ${PERFORMANCE_FLAGS})
 # basic packages
 find_package(fmt REQUIRED)
 
+# dummy interface library to add include path
+add_library(jlib_include INTERFACE)
+target_include_directories(jlib_include INTERFACE ${PROJECT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR})
+
 # dummy interface library (no sources) to hide flag selection
-add_library(jlib_base INTERFACE)
-target_link_libraries(jlib_base INTERFACE fmt::fmt)
-target_compile_options(jlib_base INTERFACE
+add_library(jlib_flags INTERFACE)
+target_compile_options(jlib_flags INTERFACE
     $<$<CONFIG:Debug>:${DEBUG_FLAGS}>
     $<$<CONFIG:Release>:${RELEASE_FLAGS}>
 )
-target_link_options(jlib_base INTERFACE
+target_link_options(jlib_flags INTERFACE
     $<$<CONFIG:Debug>:${SANITIZE}>
 )
 
@@ -45,8 +49,10 @@ set(tests jlib/BigInt.test.cpp jlib/util.test.cpp)
 foreach(testf ${tests})
   cmake_path(GET testf STEM LAST_ONLY test)
   add_executable(${test} ${testf})
-  target_link_libraries(${test} gtest::gtest fmt::fmt)
+  target_link_libraries(${test} PRIVATE gtest::gtest fmt::fmt)
   target_compile_options(${test} PRIVATE ${DEBUG_FLAGS})
   target_link_options(${test} PRIVATE ${SANITIZE})
   gtest_discover_tests(${test})
 endforeach(testf ${testfiles})
+
+target_link_libraries(BigInt.test PRIVATE bigint)

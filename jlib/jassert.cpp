@@ -1,4 +1,3 @@
-#include <jlib/jassert.hpp>
 #include <cstdlib>
 
 namespace jlib {
